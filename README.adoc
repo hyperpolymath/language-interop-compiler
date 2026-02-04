@@ -1,0 +1,126 @@
+// SPDX-License-Identifier: PMPL-1.0-or-later
+= Language Interoperability Compiler
+:toc: macro
+:toclevels: 3
+
+image:https://img.shields.io/badge/License-PMPL--1.0-blue.svg[License: PMPL-1.0,link="https://github.com/hyperpolymath/palimpsest-license"]
+image:https://img.shields.io/badge/Status-Concept-yellow.svg[Status]
+image:https://img.shields.io/badge/Uses-protocol--squisher-brightgreen.svg[Pattern]
+
+[.lead]
+**Eliminate FFI hell through automatic, formally verified language bindings.**
+
+Write types once. Generate bindings for Rust, ReScript, Julia, Gleam. **All proven semantically equivalent via Idris2.**
+
+____
+**The Breakthrough:** Language types ARE serialization formats.
+
+protocol-squisher generates adapters between serialization formats. +
+Therefore, protocol-squisher can generate language bindings.
+
+**No more manual FFI. No more unsafe blocks. No more brittle bindings.**
+____
+
+toc::[]
+
+== The Problem
+
+[source,rust]
+----
+// Manual FFI: 50 lines of boilerplate for ONE function
+#[pyfunction]
+unsafe fn process_user(ptr: *const User) -> PyResult<User> {
+    if ptr.is_null() { return Err(...); }
+    // Manual memory management, type conversion, error handling...
+}
+----
+
+**Current reality:**
+- ❌ `unsafe` blocks everywhere (CVEs waiting to happen)
+- ❌ Manual bindings for every language pair (N² problem)
+- ❌ Bindings break on version changes
+- ❌ No semantic guarantees
+
+== The Solution
+
+**protocol-squisher generates the bindings:**
+
+[source]
+----
+Abstract IR → protocol-squisher → All languages (proven correct)
+----
+
+**Result:** Zero unsafe blocks, formal proofs of correctness, N bindings from 1 definition.
+
+== How It Works
+
+**Language types = Serialization formats:** +
+ReScript `type user` ≈ JSON schema ≈ Protobuf message
+
+**protocol-squisher already does this** for JSON ↔ Rust ↔ Python
+
+**We extend it** for ReScript ↔ Rust ↔ Julia ↔ Gleam
+
+== Example
+
+[source,bash]
+----
+$ language-interop compile types.idr --targets rust,rescript,julia
+
+Generated:
+  ✓ rust/user.rs (zero unsafe blocks)
+  ✓ rescript/User.res (type-safe)
+  ✓ julia/User.jl (type-safe)
+  ✓ proofs/equivalence.idr (proven!)
+----
+
+**Use in each language - no manual FFI:**
+
+[source,rescript]
+----
+// ReScript → Rust (zero-copy, proven safe)
+let result = RustCore.validateUser(user)
+----
+
+[source,rust]
+----
+// Rust → Julia (proven compatible)
+pub fn validate_user(u: User) -> Result<User, String>
+----
+
+== Integration with protocol-squisher
+
+Located at: `~/Documents/hyperpolymath-repos/protocol-squisher`
+
+**Status:** MVP complete (Rust ↔ Python working)
+
+**Our additions:**
+- ReScript analyzer
+- Julia analyzer
+- Gleam analyzer
+- FFI optimizer
+- Proof generator
+
+== Roadmap
+
+**Phase 1:** ReScript ↔ Rust (proof-of-concept) +
+**Phase 2:** Add Julia, Gleam +
+**Phase 3:** Production use
+
+== Related Projects
+
+- link:https://github.com/hyperpolymath/protocol-squisher[protocol-squisher] - Core engine
+- link:https://github.com/hyperpolymath/universal-extension-format[UXF] - Extensions
+- link:https://github.com/hyperpolymath/proven[proven] - Idris2 proofs
+
+== License
+
+PMPL-1.0-or-later
+
+== Author
+
+Jonathan D.A. Jewell <jonathan.jewell@open.ac.uk>
+
+---
+
+**Next:** Build ReScript ↔ Rust bindings using protocol-squisher
