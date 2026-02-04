@@ -4,7 +4,7 @@
 :toclevels: 3
 
 image:https://img.shields.io/badge/License-PMPL--1.0-blue.svg[License: PMPL-1.0,link="https://github.com/hyperpolymath/palimpsest-license"]
-image:https://img.shields.io/badge/Status-Concept-yellow.svg[Status]
+image:https://img.shields.io/badge/Status-Proof--of--Concept-orange.svg[Status]
 image:https://img.shields.io/badge/Uses-protocol--squisher-brightgreen.svg[Pattern]
 
 [.lead]
@@ -101,11 +101,36 @@ Located at: `~/Documents/hyperpolymath-repos/protocol-squisher`
 - FFI optimizer
 - Proof generator
 
+== Status
+
+**Phase 1: ReScript ↔ Rust (proof-of-concept)** - IN PROGRESS ✓
+
+Completed:
+
+- ✓ Abstract IR definition (`examples/user-type.idr`)
+- ✓ ReScript bindings (`examples/User.res`)
+- ✓ Rust bindings with FFI (`examples/user.rs`)
+- ✓ ReScript analyzer (`src/analyzers/rescript_analyzer.rs`)
+- ✓ Rust analyzer (`src/analyzers/rust_analyzer.rs`)
+- ✓ Formal proofs of equivalence (`proofs/rescript_rust_equivalence.idr`)
+- ✓ Compatibility analysis (Transport Class: Concorde)
+- ✓ Complete demonstration (`DEMONSTRATION.md`)
+
+Next steps:
+
+- [ ] Integrate analyzers with protocol-squisher
+- [ ] Build actual compiler CLI
+- [ ] Add Julia analyzer
+- [ ] Add Gleam analyzer
+- [ ] Generate bindings automatically from .idr files
+
+**Phase 2:** protocol-squisher integration +
+**Phase 3:** Add Julia, Gleam +
+**Phase 4:** Production use
+
 == Roadmap
 
-**Phase 1:** ReScript ↔ Rust (proof-of-concept) +
-**Phase 2:** Add Julia, Gleam +
-**Phase 3:** Production use
+See link:DEMONSTRATION.md[DEMONSTRATION.md] for complete examples and technical details.
 
 == Related Projects
 

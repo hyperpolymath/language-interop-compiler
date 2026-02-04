@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: PMPL-1.0-or-later
+
+[package]
+name = "language-interop-compiler"
+version = "0.1.0"
+authors = ["Jonathan D.A. Jewell <jonathan.jewell@open.ac.uk>"]
+edition = "2021"
+license = "PMPL-1.0-or-later"
+description = "Automatic, formally verified language bindings via protocol-squisher"
+repository = "https://github.com/hyperpolymath/language-interop-compiler"
+keywords = ["ffi", "interop", "bindings", "formal-verification", "protocol-squisher"]
+categories = ["development-tools", "compilers"]
+
+[lib]
+name = "language_interop"
+path = "src/lib.rs"
+
+[dependencies]
+# Core dependencies for analyzer modules
+# syn = "2.0"          # Rust parser (when implementing full analyzer)
+# rescript-parser = "0.1"  # ReScript parser (to be created)
+
+[dev-dependencies]
+# Testing dependencies
+
+[[example]]
+name = "user_example"
+path = "examples/user.rs"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+
+[profile.dev]
+opt-level = 0
+debug = true
