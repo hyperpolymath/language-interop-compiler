@@ -1,0 +1,6 @@
+homepage: "https://github.com/hyperpolymath/language-interop-compiler"
+language: rust
+main_repo: "https://github.com/hyperpolymath/language-interop-compiler"
+sanitizers:
+  - address
+  - undefined
